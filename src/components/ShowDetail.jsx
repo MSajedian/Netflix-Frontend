@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-
+import uniqid from 'uniqid'
 
 class ShowDetail extends Component {
     constructor(props) {
@@ -64,7 +64,7 @@ class ShowDetail extends Component {
                             <img src={this.state.Movie.Poster} alt={this.state.Movie.Title} />
                             <div className="text-white text-center">{this.state.Movie.Title}</div>
                             {this.state.comments.map((comment) => (
-                                <div className="text-white" key={comment}>
+                                <div className="text-white" key={uniqid()}>
                                     <hr />
                                     {comment.comment}
                                     <div className="text-white">Rate: {comment.rate} </div>

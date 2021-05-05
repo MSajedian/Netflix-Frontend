@@ -14,7 +14,7 @@ class App extends Component {
         <Router>
           <NFNavbar showSearchResult={this.showSearchResult} />
 
-          <Route path="/" exact render={(props) => <Home />} />
+          <Route path="/" exact render={(props) => <Home {...props} />} />
           <Route path="/details/:movieId" exact render={(props) => <ShowDetail {...props}/>} />
 
           <Footer />

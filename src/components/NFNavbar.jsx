@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Nav, InputGroup, FormControl } from "react-bootstrap";
 import { withRouter } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 class NFNavbar extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class NFNavbar extends Component {
 
   searchStringHandler = (e) => {
     if (e.keyCode === 13) {
-      // WHEN ENTER KEY IS PRESSED
       this.props.showSearchResult(this.state.searchString);
     } else {
       this.setState({ searchString: e.currentTarget.value });
@@ -22,13 +22,13 @@ class NFNavbar extends Component {
   render() {
     return (
       <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
-        <Navbar.Brand href="/">
+        <Link className="navbar-brand" to="/" >
           <img
             src="/assets/logo.png"
             alt="logo"
             style={{ width: "100px", height: "55px" }}
           />
-        </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
