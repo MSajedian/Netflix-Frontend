@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-import Movie from "./Movie";
 
 
 class ShowDetail extends Component {
@@ -57,11 +56,6 @@ class ShowDetail extends Component {
                     <h1 className="text-white">ShowDetail</h1>
                 </Row>
                 <Row className="justify-content-center">
-                    {/* title="Search results"
-                            fetchComments={this.fetchComments}
-                            comments={this.state.comments}
-                            movies={this.state.searchedMovies} */}
-
                     {this.state.Movie && this.state.comments && (
                         <div>
                             <img src={this.state.Movie.Poster} alt={this.state.Movie.Title} />
