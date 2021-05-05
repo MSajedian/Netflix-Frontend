@@ -53,11 +53,13 @@ class Home extends Component {
     };
 
     fetchComments = async (movieID) => {
-        const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+        const commentsUrl = "https://striveschool-api.herokuapp.com/api/comments/";
         const comments = await fetch(commentsUrl + movieID, {
-            headers: new Headers({
-                Authorization: "[INSERT_YOUR_AUTH_HERE]",
-            }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDkyYjUyYTAyNTNhYTAwMTU5NjRhNTkiLCJpYXQiOjE2MjAyMjczNzAsImV4cCI6MTYyMTQzNjk3MH0.p6GxtmtZE5QZ0rhZCB4Kxt1z3GlHOTEnByED_yMOiNU",
+            }
         }).then((response) => response.json());
         this.setState({ comments });
     };

@@ -37,17 +37,20 @@ class ShowDetail extends Component {
         }
     }
 
+
     fetchComments = async (movieID) => {
-        const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+        const commentsUrl = "https://striveschool-api.herokuapp.com/api/comments/";
         const comments = await fetch(commentsUrl + movieID, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization:
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMGNjMGIxZjBmYjAwMTVkOTE3MDYiLCJpYXQiOjE2MTkwMDQ2MDksImV4cCI6MTYyMDIxNDIwOX0.DGDlgKpWowe1bbzGnpP8h09QTfnZMSrDp93COWwfleU",
+                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDkyYjUyYTAyNTNhYTAwMTU5NjRhNTkiLCJpYXQiOjE2MjAyMjczNzAsImV4cCI6MTYyMTQzNjk3MH0.p6GxtmtZE5QZ0rhZCB4Kxt1z3GlHOTEnByED_yMOiNU",
             }
         }).then((response) => response.json());
         this.setState({ comments });
+        console.log('this.state.comments:', this.state.comments)
     };
+
 
     render() {
         return (
@@ -56,11 +59,17 @@ class ShowDetail extends Component {
                     <h1 className="text-white">ShowDetail</h1>
                 </Row>
                 <Row className="justify-content-center">
-                    {this.state.Movie && this.state.comments && (
+                    {this.state.Movie && (
                         <div>
                             <img src={this.state.Movie.Poster} alt={this.state.Movie.Title} />
                             <div className="text-white text-center">{this.state.Movie.Title}</div>
-                            <div className="text-white text-center"><b>comments:</b>{this.state.comments}</div>
+                            {this.state.comments.map((comment) => (
+                                <div className="text-white" key={comment}>
+                                    <hr />
+                                    {comment.comment}
+                                    <div className="text-white">Rate: {comment.rate} </div>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </Row>
