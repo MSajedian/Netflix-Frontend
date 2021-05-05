@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import {
   Col,
   Modal,
@@ -59,15 +61,21 @@ class Movie extends Component {
   render() {
     return (
       <Col className="mb-2" key={this.props.data.imdbID}>
-        <img
-          className="img-fluid"
-          src={this.props.data.Poster}
-          alt="movie"
-          onClick={() => {
-            this.setState({ selected: !this.state.selected });
-            this.props.fetchComments(this.props.data.imdbID);
-          }}
-        />
+        <Link
+          className="nav-link"
+          to={"/details/" + this.props.data.imdbID}
+        >
+          <img
+            className="img-fluid"
+            src={this.props.data.Poster}
+            alt="movie"
+            onClick={() => {
+              this.setState({ selected: !this.state.selected });
+              this.props.fetchComments(this.props.data.imdbID);
+            }}
+          />
+        </Link>
+
         <Modal
           show={this.state.selected}
           onHide={() => this.setState({ selected: !this.state.selected })}
