@@ -32,31 +32,29 @@ const validationSchema = Yup.object().shape({
             /^(?=.*[A-Za-z])(?=.*\d)/,
             "Must Contain 8 Characters, One letter, One Number"
         ),
-
     // (?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
 
     // Year of Birth - Required - from 1910+
     yearofBirth: Yup.number()
         .min(1910, 'Year of Birth should be greater than 1910.')
-        .required("*Password is required"),
+        .required("*Year of Birth is required"),
 
     // Street Address - Required
     streetAddress: Yup.string()
-        .required("*Password is required"),
+        .required("*Street Address is required"),
 
     // City - Required
     city: Yup.string()
-        .required("*Password is required"),
+        .required("*city is required"),
 
     // Postal Code - Required - Numeric 5 digits
-    postalCode: Yup.number()
-        .min(5, '*postalCode is not correct')
-        .max(5, "*postalCode is not correct")
-        .required("*Password is required"),
+    postalCode: Yup.string()
+        .length( 5, "Must be 5 digits" )
+        .required("*Postal Code is required"),
 
     // Credit card - XXXX-XXXX-XXXX-XXXX (EXTRA)
     creditCard: Yup.string()
-        .required("*Password is required"),
+        .required("*Credit Card is required"),
 
 });
 
