@@ -22,7 +22,7 @@ class NFNavbar extends Component {
   render() {
     return (
       <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
-        <Link className="navbar-brand" to="/" >
+        <Link className="navbar-brand font-weight-bold" to="/" >
           <img
             src="/assets/logo.png"
             alt="logo"
@@ -32,21 +32,21 @@ class NFNavbar extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link className="font-weight-bold" href="/">
-              Home
-            </Nav.Link>
-            <Nav.Link active className="font-weight-bold" href="/">
-              TV Shows
-            </Nav.Link>
-            <Nav.Link className="font-weight-bold" href="/">
-              Movies
-            </Nav.Link>
-            <Nav.Link className="font-weight-bold" href="/">
-              Recently Added
-            </Nav.Link>
-            <Nav.Link className="font-weight-bold" href="/">
-              My List
-            </Nav.Link>
+            <Link className="nav-link font-weight-bold" to="/" >
+              <div className={`nav-link${this.props.location.pathname === '/' ? ' active' : ''}`}>Home</div>
+            </Link>
+            <Link className="nav-link font-weight-bold" to="/tvshows" >
+              <div className={`nav-link${this.props.location.pathname === '/tvshows' ? ' active' : ''}`}>TV Shows</div>
+            </Link>
+            <Link className="nav-link font-weight-bold" to="/movies" >
+              <div className={`nav-link${this.props.location.pathname === '/movies' ? ' active' : ''}`}>Movies</div>
+            </Link>
+            <Link className="nav-link font-weight-bold" to="/mylist" >
+              <div className={`nav-link${this.props.location.pathname === '/mylist' ? ' active' : ''}`}>My List</div>
+            </Link>
+            <Link className="nav-link font-weight-bold" to="/registration" active>
+              <div className={`nav-link${this.props.location.pathname === '/registration' ? ' active' : ''}`}>Registration</div>
+            </Link>
           </Nav>
           <span className="d-none d-md-flex align-items-center">
             <InputGroup className="icons">
