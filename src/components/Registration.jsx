@@ -25,9 +25,15 @@ const validationSchema = Yup.object().shape({
 
     // Password - Required - Should contain at least 8 chars, 1 digit, 1 letter
     password: Yup.string()
-        .min(8, "*Password must have at least 8 characters")
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.')
         .max(100, "*Password must be less than 100 characters")
-        .required("*Password is required"),
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)/,
+            "Must Contain 8 Characters, One letter, One Number"
+        ),
+
+        // (?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
 
     // Year of Birth - Required - from 1910+
     yearofBirth: Yup.string()
@@ -39,15 +45,15 @@ const validationSchema = Yup.object().shape({
 
     // City - Required
     city: Yup.string()
-    .required("*Password is required"),
+        .required("*Password is required"),
 
     // Postal Code - Required - Numeric 5 digits
     postalCode: Yup.string()
-    .required("*Password is required"),
+        .required("*Password is required"),
 
     // Credit card - XXXX-XXXX-XXXX-XXXX (EXTRA)
     creditCard: Yup.string()
-    .required("*Password is required"),
+        .required("*Password is required"),
 
 });
 
