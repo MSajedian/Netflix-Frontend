@@ -33,10 +33,11 @@ const validationSchema = Yup.object().shape({
             "Must Contain 8 Characters, One letter, One Number"
         ),
 
-        // (?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
+    // (?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$
 
     // Year of Birth - Required - from 1910+
-    yearofBirth: Yup.string()
+    yearofBirth: Yup.number()
+        .min(1910, 'Year of Birth should be greater than 1910.')
         .required("*Password is required"),
 
     // Street Address - Required
@@ -48,7 +49,9 @@ const validationSchema = Yup.object().shape({
         .required("*Password is required"),
 
     // Postal Code - Required - Numeric 5 digits
-    postalCode: Yup.string()
+    postalCode: Yup.number()
+        .min(5, '*postalCode is not correct')
+        .max(5, "*postalCode is not correct")
         .required("*Password is required"),
 
     // Credit card - XXXX-XXXX-XXXX-XXXX (EXTRA)
@@ -56,13 +59,6 @@ const validationSchema = Yup.object().shape({
         .required("*Password is required"),
 
 });
-
-// phone: Yup.string()
-//     .matches(phoneRegExp, "*Phone number is not valid")
-//     .required("*Phone number required"),
-// blog: Yup.string()
-//     .url("*Must enter URL in http://www.example.com format")
-//     .required("*URL required")
 
 const Registration = () => {
     return (
@@ -216,7 +212,7 @@ const Registration = () => {
                         <Form.Group controlId="formpostalCode">
                             <Form.Label className="text-white">Postal Code :</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="number"
                                 name="postalCode"
                                 placeholder="Postal Code"
                                 onChange={handleChange}
