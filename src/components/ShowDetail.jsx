@@ -19,7 +19,7 @@ class ShowDetail extends Component {
         this.fetchComments(idFromTheURLBar)
     }
 
-    url = "http://www.omdbapi.com/?apikey=c71a553d";
+    url = "https://www.omdbapi.com/?apikey=c71a553d";
 
     fetchMovie = async (idFromTheURLBar) => {
         try {

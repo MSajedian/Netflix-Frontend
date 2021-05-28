@@ -18,7 +18,7 @@ class Home extends Component {
         };
     }
 
-    url = "http://www.omdbapi.com/?apikey=c71a553d";
+    url = "https://www.omdbapi.com/?apikey=c71a553d";
 
     componentDidMount = () => {
         Promise.all([
