@@ -76,7 +76,7 @@ class ShowDetail extends Component {
                             {this.state.reviews.map((review) => (
                                 <div className="text-white" key={uniqid()}>
                                     <hr />
-                                    {review.review}
+                                    {review.comment}
                                     <div className="text-white">Rate: {review.rate} </div>
                                 </div>
                             ))}
