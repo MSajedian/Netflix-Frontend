@@ -8,16 +8,19 @@ import ShowDetail from "./components/ShowDetail";
 import Registration from "./components/Registration";
 
 class App extends Component {
+  state = { searchString: "" }
+
+  callbackFunction = (Input) => {
+    this.setState({ searchString: Input })
+  }
 
   render() {
     return (
       <div className="App">
-
         <Router>
-          <NFNavbar showSearchResult={this.showSearchResult} />
-
+          <NFNavbar parentCallback={this.callbackFunction} />
           <Switch>
-            <Route path="/" exact render={(props) => <Home {...props} />} />
+            <Route path="/" exact render={(props) => <Home {...props} searchString={this.state.searchString} />} />
             <Route path="/details/:movieId" exact render={(props) => <ShowDetail {...props} />} />
             <Route path="/registration" exact render={(props) => <Registration {...props} />} />
           </Switch>

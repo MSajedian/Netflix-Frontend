@@ -11,13 +11,20 @@ class NFNavbar extends Component {
     };
   }
 
+  sendToParent = () => {
+  }
+
   searchStringHandler = (e) => {
+    // this.setState({ searchString: e.currentTarget.value });
+    //   this.props.parentCallback(this.state.searchString)
     if (e.keyCode === 13) {
-      this.props.showSearchResult(this.state.searchString);
+      this.props.parentCallback(this.state.searchString)
     } else {
       this.setState({ searchString: e.currentTarget.value });
+      this.props.parentCallback(this.state.searchString)
     }
   };
+
 
   render() {
     return (
@@ -54,8 +61,8 @@ class NFNavbar extends Component {
                 placeholder="Search and Press Enter"
                 aria-label="search"
                 aria-describedby="basic-addon1"
-                onKeyDown={this.searchStringHandler}
                 onChange={this.searchStringHandler}
+                onKeyPress={this.searchStringHandler}
                 value={this.state.searchString}
               />
             </InputGroup>

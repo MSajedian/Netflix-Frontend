@@ -7,6 +7,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            searchString: "",
             harryPotterMovies: [],
             spiderManMovies: [],
             starWarsMovies: [],
@@ -44,14 +45,6 @@ class Home extends Component {
             });
     };
 
-    showSearchResult = (searchString) => {
-        fetch(this.url + "&s=" + searchString)
-            .then((response) => response.json())
-            .then((responseObject) =>
-                this.setState({ searchedMovies: responseObject.Search })
-            );
-    };
-
     fetchComments = async (movieID) => {
         const commentsUrl = "https://striveschool-api.herokuapp.com/api/comments/";
         const comments = await fetch(commentsUrl + movieID, {
@@ -63,6 +56,25 @@ class Home extends Component {
         }).then((response) => response.json());
         this.setState({ comments });
     };
+
+    showSearchResult = (searchString) => {
+        fetch(this.url + "&s=" + searchString.toString())
+            .then((response) => response.json())
+            .then((responseObject) => {
+                if (responseObject.Search) {
+                    this.setState({ searchedMovies: responseObject.Search })
+                }
+            }
+            );
+    };
+
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.searchString !== this.props.searchString) {
+            this.setState({ searchString: this.props.searchString });
+            this.showSearchResult(this.props.searchString)
+        }
+    }
 
     render() {
         return (
@@ -98,38 +110,44 @@ class Home extends Component {
                             An error has occurred, please try again later
                         </Alert>
                     )}
+
                     {this.state.searchedMovies.length > 0 && (
                         <Gallery
-                            title="Search results"
+                            title={"Search results"}
                             fetchComments={this.fetchComments}
                             comments={this.state.comments}
                             movies={this.state.searchedMovies}
                         />
                     )}
-                    {!this.state.error && !this.state.searchedMovies.length > 0 && (
-                        <>
-                            <Gallery
-                                title="Harry Potter"
-                                loading={this.state.loading}
-                                fetchComments={this.fetchComments}
-                                comments={this.state.comments}
-                                movies={this.state.harryPotterMovies.slice(0, 6)}
-                            />
-                            <Gallery
-                                title="Spider Man"
-                                loading={this.state.loading}
-                                fetchComments={this.fetchComments}
-                                comments={this.state.comments}
-                                movies={this.state.spiderManMovies.slice(0, 6)}
-                            />
-                            <Gallery
-                                title="Star Wars"
-                                loading={this.state.loading}
-                                fetchComments={this.fetchComments}
-                                comments={this.state.comments}
-                                movies={this.state.starWarsMovies.slice(0, 6)}
-                            />
-                        </>
+
+                    {!this.state.error && this.state.harryPotterMovies.length > 0 && (
+                        <Gallery
+                            title="Harry Potter"
+                            loading={this.state.loading}
+                            fetchComments={this.fetchComments}
+                            comments={this.state.comments}
+                            movies={this.state.harryPotterMovies.slice(0, 6)}
+                        />
+                    )}
+                    {!this.state.error && this.state.spiderManMovies.length > 0 && (
+
+                        <Gallery
+                            title="Spider Man"
+                            loading={this.state.loading}
+                            fetchComments={this.fetchComments}
+                            comments={this.state.comments}
+                            movies={this.state.spiderManMovies.slice(0, 6)}
+                        />
+                    )}
+                    {!this.state.error && this.state.starWarsMovies.length > 0 && (
+
+                        <Gallery
+                            title="Star Wars"
+                            loading={this.state.loading}
+                            fetchComments={this.fetchComments}
+                            comments={this.state.comments}
+                            movies={this.state.starWarsMovies.slice(0, 6)}
+                        />
                     )}
                 </Container>
             </>);
