@@ -8,7 +8,7 @@ class ShowDetail extends Component {
         this.state = {
             id: "",
             Movie: {},
-            comments: []
+            reviews: []
         }
     }
 
@@ -16,15 +16,15 @@ class ShowDetail extends Component {
         let idFromTheURLBar = this.props.match.params.movieId.toString()
         console.log('idFromTheURLBar:', idFromTheURLBar)
         this.fetchMovie(idFromTheURLBar)
-        this.fetchComments(idFromTheURLBar)
+        this.fetchReviews(idFromTheURLBar)
     }
 
     // url = "https://www.omdbapi.com/?apikey=c71a553d";
-    url = "https://app-netflix-backend.herokuapp.com/medias";
+    url = "https://app-netflix-backend.herokuapp.com";
 
     fetchMovie = async (idFromTheURLBar) => {
         try {
-            let response = await fetch(`${this.url}/${idFromTheURLBar}`, { headers: { Origin: process.env.REACT_APP_FRONTEND_API_URL } })
+            let response = await fetch(`${this.url}/medias/${idFromTheURLBar}`, { headers: { Origin: process.env.REACT_APP_FRONTEND_API_URL } })
             if (response.ok) {
                 let data = await response.json()
                 console.log("data", data)
@@ -38,20 +38,29 @@ class ShowDetail extends Component {
         }
     }
 
+    // fetchReviews = async (movieID) => {
+    //     const reviewsUrl = "https://app-netflix-backend.herokuapp.com/reviews/";
+    //     const reviews = await fetch(reviewsUrl + movieID, { headers: { Origin: process.env.REACT_APP_FRONTEND_API_URL } })
+    //         .then((response) => response.json());
+    //     console.log('this.state.reviews:', this.state.reviews)
+    //     this.setState({ reviews });
+    // };
 
-    fetchComments = async (movieID) => {
-        const commentsUrl = "https://striveschool-api.herokuapp.com/api/comments/";
-        const comments = await fetch(commentsUrl + movieID, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization:
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDkyYjUyYTAyNTNhYTAwMTU5NjRhNTkiLCJpYXQiOjE2MjE1ODE1MTMsImV4cCI6MTYyMjc5MTExM30.xX1bdh-kAI426pIAHwyGgERUwH-di9UXYWKK1-jFlvY",
+    fetchReviews = async (movieID) => {
+        try {
+            let response = await fetch(`${this.url}/reviews/${movieID}`, { headers: { Origin: process.env.REACT_APP_FRONTEND_API_URL } })
+            if (response.ok) {
+                let data = await response.json()
+                console.log("reviews", data)
+                this.setState({ reviews: data })
+            } else {
+                console.log("Error")
             }
-        }).then((response) => response.json());
-        this.setState({ comments });
-        console.log('this.state.comments:', this.state.comments)
-    };
-
+        } catch (error) {
+            console.log(error)
+            this.setState({ isError: true, isLoading: false })
+        }
+    }
 
     render() {
         return (
@@ -64,11 +73,11 @@ class ShowDetail extends Component {
                         <div>
                             <img src={this.state.Movie.Poster} alt={this.state.Movie.Title} />
                             <div className="text-white text-center">{this.state.Movie.Title}</div>
-                            {this.state.comments.map((comment) => (
+                            {this.state.reviews.map((review) => (
                                 <div className="text-white" key={uniqid()}>
                                     <hr />
-                                    {comment.comment}
-                                    <div className="text-white">Rate: {comment.rate} </div>
+                                    {review.review}
+                                    <div className="text-white">Rate: {review.rate} </div>
                                 </div>
                             ))}
                         </div>
