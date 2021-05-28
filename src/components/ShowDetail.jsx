@@ -19,7 +19,8 @@ class ShowDetail extends Component {
         this.fetchComments(idFromTheURLBar)
     }
 
-    url = "https://www.omdbapi.com/?apikey=c71a553d";
+    // url = "https://www.omdbapi.com/?apikey=c71a553d";
+    url = "https://app-netflix-backend.herokuapp.com/medias";
 
     fetchMovie = async (idFromTheURLBar) => {
         try {

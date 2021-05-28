@@ -8,7 +8,7 @@ class Home extends Component {
         super(props);
         this.state = {
             searchString: "",
-            harryPotterMovies: [],
+            defaultMovies: [],
             spiderManMovies: [],
             starWarsMovies: [],
             searchedMovies: [],
@@ -18,26 +18,15 @@ class Home extends Component {
         };
     }
 
-    url = "https://www.omdbapi.com/?apikey=c71a553d";
+    // url = "https://www.omdbapi.com/?apikey=c71a553d";
+    url = "https://app-netflix-backend.herokuapp.com/medias";
 
     componentDidMount = () => {
-        Promise.all([
-            fetch(this.url + "&s=harry%20potter")
-                .then((response) => response.json())
-                .then((responseObject) =>
-                    this.setState({ harryPotterMovies: responseObject.Search })
-                ),
-            fetch(this.url + "&s=spider%20man")
-                .then((response) => response.json())
-                .then((responseObject) =>
-                    this.setState({ spiderManMovies: responseObject.Search })
-                ),
-            fetch(this.url + "&s=star%20wars")
-                .then((response) => response.json())
-                .then((responseObject) =>
-                    this.setState({ starWarsMovies: responseObject.Search })
-                ),
-        ])
+        fetch(this.url, { headers: { Origin: process.env.REACT_APP_FRONTEND_API_URL } })
+            .then((response) => response.json())
+            .then((responseObject) =>
+                this.setState({ defaultMovies: responseObject })
+            )
             .then(() => this.setState({ loading: false }))
             .catch((err) => {
                 this.setState({ error: true });
@@ -120,33 +109,13 @@ class Home extends Component {
                         />
                     )}
 
-                    {!this.state.error && this.state.harryPotterMovies.length > 0 && (
+                    {!this.state.error && this.state.defaultMovies.length > 0 && (
                         <Gallery
-                            title="Harry Potter"
+                            title="Movies"
                             loading={this.state.loading}
                             fetchComments={this.fetchComments}
                             comments={this.state.comments}
-                            movies={this.state.harryPotterMovies.slice(0, 6)}
-                        />
-                    )}
-                    {!this.state.error && this.state.spiderManMovies.length > 0 && (
-
-                        <Gallery
-                            title="Spider Man"
-                            loading={this.state.loading}
-                            fetchComments={this.fetchComments}
-                            comments={this.state.comments}
-                            movies={this.state.spiderManMovies.slice(0, 6)}
-                        />
-                    )}
-                    {!this.state.error && this.state.starWarsMovies.length > 0 && (
-
-                        <Gallery
-                            title="Star Wars"
-                            loading={this.state.loading}
-                            fetchComments={this.fetchComments}
-                            comments={this.state.comments}
-                            movies={this.state.starWarsMovies.slice(0, 6)}
+                            movies={this.state.defaultMovies.slice(0, 12)}
                         />
                     )}
                 </Container>
