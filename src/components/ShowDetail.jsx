@@ -24,7 +24,7 @@ class ShowDetail extends Component {
 
     fetchMovie = async (idFromTheURLBar) => {
         try {
-            let response = await fetch(`${this.url}&i=${idFromTheURLBar}`)
+            let response = await fetch(`${this.url}/${idFromTheURLBar}`, { headers: { Origin: process.env.REACT_APP_FRONTEND_API_URL } })
             if (response.ok) {
                 let data = await response.json()
                 console.log("data", data)
